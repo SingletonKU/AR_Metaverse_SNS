@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "422251463207",
+    "firebase_url": "https://ar-metaverse-sns-default-rtdb.firebaseio.com",
+    "project_id": "ar-metaverse-sns",
+    "storage_bucket": "ar-metaverse-sns.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422251463207:android:2c026ba94fa3700e110402",
+        "android_client_info": {
+          "package_name": "com.singletonku.ar_metaverse_sns"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422251463207-7jjeacn5os9t177iifugiii3vsdpgpne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.singletonku.ar_metaverse_sns",
+            "certificate_hash": "479892323fd2e54362a1e62b2fbdd3299006ae16"
+          }
+        },
+        {
+          "client_id": "422251463207-nh3910arrq9q6gdhh88t504vevqu80c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCILIQQqCHbO8Vezy5K1ugz1praXC9knVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422251463207-nh3910arrq9q6gdhh88t504vevqu80c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

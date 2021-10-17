@@ -53,6 +53,12 @@ class MainActivity : AppCompatActivity(){
                     true
                 }
 
+                R.id.action_ar -> {
+                    val ArFragment = ArFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_content, ArFragment).commit()
+                    true
+                }
+
                 R.id.action_account -> {
                     val userFragment = UserFragment()
                     var bundle = Bundle()

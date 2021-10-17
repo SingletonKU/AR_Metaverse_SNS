@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -163,6 +164,39 @@ class HashtagFragment : Fragment() {
                 var intent = Intent(v.context, CommentActivity::class.java)
                 intent.putExtra("contentUid", contentUidList[position])
                 startActivity(intent)
+            }
+
+            var checkId = FirebaseAuth.getInstance().currentUser?.uid
+            if (checkId != contentDTOs[position].uid) {
+                holder.binding.detailviewitemProfileDelete.visibility = View.GONE
+            }
+
+            holder.binding.detailviewitemProfileDelete.setOnClickListener {
+
+                //해당 게시글이 자신이 작성한 게시물인지 체크
+                var checkId = FirebaseAuth.getInstance().currentUser?.uid
+                if (checkId == contentDTOs[position].uid) {
+                    val dlgBuilder = AlertDialog.Builder(this@HashtagFragment.requireContext())
+                        .setTitle("게시글 삭제")
+                        .setMessage("해당 게시글을 삭제하시겠습니까?")
+                        .setIcon(R.drawable.ic_baseline_delete_forever_24)
+                        .setPositiveButton("삭제") { _, _ ->
+                            firestore
+                                ?.collection("images")
+                                ?.document(contentUidList[position])
+                                ?.delete()
+                                ?.addOnSuccessListener {
+                                    recyclerDataInit()
+                                    Log.d("게시글 삭제", "게시글 삭제 성공!")
+                                }
+                                ?.addOnFailureListener { e -> Log.w("게시글 삭제", "게시글 삭제 실패 ㅠㅠ", e) }
+                        }
+                        .setNegativeButton("취소") { _, _ ->
+
+                        }
+
+                    dlgBuilder.show()
+                }
             }
 
         }

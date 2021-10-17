@@ -9,13 +9,16 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.singletonku.ar_metaverse_sns.MainActivity
 import com.singletonku.ar_metaverse_sns.R
@@ -55,39 +58,7 @@ class UploadedViewActivity : AppCompatActivity() {
         var contentUidList: ArrayList<String> = arrayListOf()
 
         init {
-            var ref =
-                firestore?.collection("images")?.whereEqualTo("uid", uid!!)
-                    ?.orderBy("timestamp")
-
-            Log.d("my UID", uid!!)
-
-
-            firestore?.collection("images")?.orderBy("timestamp")
-                ?.addSnapshotListener { value, error2 ->
-                    ref?.addSnapshotListener { querySnapshot, error ->
-                        var newContentDTOs: ArrayList<ContentDTO> = arrayListOf()
-                        var newContentUidList: ArrayList<String> = arrayListOf()
-                        newContentDTOs.clear()
-                        newContentUidList.clear()
-
-                        Log.d("snap size", "null 확인후 리턴 직전")
-
-                        //sometimes, This code return null of qeurySnapshot when it signout
-                        if (querySnapshot == null) return@addSnapshotListener
-
-                        Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
-                        for (snapshot in querySnapshot!!.documents) {
-                            var item = snapshot.toObject(ContentDTO::class.java)
-                            newContentDTOs.add(item!!)
-                            newContentUidList.add(snapshot.id)
-                        }
-
-                        contentDTOs = newContentDTOs
-                        contentUidList = newContentUidList
-                        notifyDataSetChanged()
-                        Log.d("my CONTENTS", "size : " + contentDTOs.size)
-                    }
-                }
+            recyclerDataInit()
         }
 
         inner class MyViewHolder(val binding: ItemDetailBinding) :
@@ -183,6 +154,40 @@ class UploadedViewActivity : AppCompatActivity() {
                 intent.putExtra("contentUid", contentUidList[position])
                 startActivity(intent)
             }
+
+            var checkId = FirebaseAuth.getInstance().currentUser?.uid
+            if (checkId != contentDTOs[position].uid) {
+                holder.binding.detailviewitemProfileDelete.visibility = View.GONE
+            }
+
+
+            holder.binding.detailviewitemProfileDelete.setOnClickListener {
+
+                //해당 게시글이 자신이 작성한 게시물인지 체크
+                var checkId = FirebaseAuth.getInstance().currentUser?.uid
+                if (checkId == contentDTOs[position].uid) {
+                    val dlgBuilder = AlertDialog.Builder(this@UploadedViewActivity)
+                        .setTitle("게시글 삭제")
+                        .setMessage("해당 게시글을 삭제하시겠습니까?")
+                        .setIcon(R.drawable.ic_baseline_delete_forever_24)
+                        .setPositiveButton("삭제") { _, _ ->
+                            firestore
+                                ?.collection("images")
+                                ?.document(contentUidList[position])
+                                ?.delete()
+                                ?.addOnSuccessListener {
+                                    recyclerDataInit()
+                                    Log.d("게시글 삭제", "게시글 삭제 성공!")
+                                }
+                                ?.addOnFailureListener { e -> Log.w("게시글 삭제", "게시글 삭제 실패 ㅠㅠ", e) }
+                        }
+                        .setNegativeButton("취소") { _, _ ->
+
+                        }
+
+                    dlgBuilder.show()
+                }
+            }
         }
 
         override fun getItemCount(): Int {
@@ -233,6 +238,7 @@ class UploadedViewActivity : AppCompatActivity() {
                         override fun onHashtagClickEvent(data: String, context: Context) {
                             var myIntent = Intent(context, MainActivity::class.java)
                             myIntent.putExtra("hashtagEvent", data)
+                            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) //액티비티 스택제거
                             startActivity(myIntent)
                         }
                     })
@@ -260,6 +266,42 @@ class UploadedViewActivity : AppCompatActivity() {
             }
 
             return spans
+        }
+
+        fun recyclerDataInit(){
+            var ref =
+                firestore?.collection("images")?.whereEqualTo("uid", uid!!)
+                    ?.orderBy("timestamp")
+
+            Log.d("my UID", uid!!)
+
+
+            firestore?.collection("images")?.orderBy("timestamp")
+                ?.addSnapshotListener { value, error2 ->
+                    ref?.addSnapshotListener { querySnapshot, error ->
+                        var newContentDTOs: ArrayList<ContentDTO> = arrayListOf()
+                        var newContentUidList: ArrayList<String> = arrayListOf()
+                        newContentDTOs.clear()
+                        newContentUidList.clear()
+
+                        Log.d("snap size", "null 확인후 리턴 직전")
+
+                        //sometimes, This code return null of qeurySnapshot when it signout
+                        if (querySnapshot == null) return@addSnapshotListener
+
+                        Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
+                        for (snapshot in querySnapshot!!.documents) {
+                            var item = snapshot.toObject(ContentDTO::class.java)
+                            newContentDTOs.add(item!!)
+                            newContentUidList.add(snapshot.id)
+                        }
+
+                        contentDTOs = newContentDTOs
+                        contentUidList = newContentUidList
+                        notifyDataSetChanged()
+                        Log.d("my CONTENTS", "size : " + contentDTOs.size)
+                    }
+                }
         }
 
     }

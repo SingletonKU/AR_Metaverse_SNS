@@ -79,12 +79,20 @@ class MainActivity : AppCompatActivity(){
         //Set default screen
         bottomNavigation.selectedItemId = R.id.action_home
 
+        var userEvent : String? = intent.getStringExtra("userEvent")
+        if(userEvent != null){
+            userEvent = null
+            bottomNavigation.selectedItemId = R.id.action_account
+        }
+
         var hashtagEvent : String? = intent.getStringExtra("hashtagEvent")
         if (hashtagEvent != null){
             myViewModel.setLiveData(hashtagEvent)
             hashtagEvent = null
             bottomNavigation.selectedItemId = R.id.action_search
         }
+
+
     }
 
     fun setToolbarDefault(){
@@ -92,6 +100,7 @@ class MainActivity : AppCompatActivity(){
         toolbar_btn_back.visibility = View.GONE
         toolbar_title_image.visibility = View.VISIBLE
     }
+
 }
 
 

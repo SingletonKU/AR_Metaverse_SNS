@@ -65,6 +65,7 @@ class AddPhotoActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_OK)
 
                 var myIntent = Intent(this, MainActivity::class.java)
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) //액티비티 스택제거
                 startActivity(myIntent)
             }
             else{
@@ -89,6 +90,7 @@ class AddPhotoActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
 
             var myIntent = Intent(this, MainActivity::class.java)
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) //액티비티 스택제거
             startActivity(myIntent)
 
             /*setResult(Activity.RESULT_OK)
@@ -145,6 +147,7 @@ class AddPhotoActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
 
             var myIntent = Intent(this, MainActivity::class.java)
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) //액티비티 스택제거
             startActivity(myIntent)
 
         }

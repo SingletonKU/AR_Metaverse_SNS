@@ -21,8 +21,20 @@
         <TextView
             android:id="@+id/detailviewitem_profile_textview"
             android:text="User name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/detailviewitem_profile_delete"
+            android:layout_margin="7.5dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_delete_forever_24"
+            android:scaleType="fitXY"
+
+            />
+
         
     </LinearLayout>
 

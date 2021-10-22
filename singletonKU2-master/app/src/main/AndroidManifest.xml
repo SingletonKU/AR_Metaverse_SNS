@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AR_Metaverse_SNS">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".navigation.UploadedViewActivity"></activity>
         <activity
             android:name=".navigation.CommentActivity"

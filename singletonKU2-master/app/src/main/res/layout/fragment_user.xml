@@ -3,95 +3,105 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
+    android:layout_height="match_parent"
+    android:background="@drawable/beige">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:elevation="@dimen/cardview_default_elevation">
 
         <ImageView
             android:id="@+id/account_iv_profile"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_account"
             android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_account" />
 
         <Button
             android:id="@+id/account_btn_follow_signout"
-            android:text="FOLLOW"
-            android:layout_toRightOf="@+id/account_iv_profile"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/account_iv_profile"
+            android:backgroundTint="#A300BCD4"
+            android:text="FOLLOW" />
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/account_btn_follow_signout"
-            android:layout_toRightOf="@id/account_iv_profile">
+            android:layout_toRightOf="@id/account_iv_profile"
+            android:gravity="center">
 
             <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Post"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Post"
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/account_tv_post_count"
-                    android:text="0"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Follower"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Follower"
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/account_tv_follower_count"
-                    android:text="0"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center"
-                android:orientation="vertical"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Following"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Following"
+                    android:textColor="@color/black" />
+
                 <TextView
                     android:id="@+id/account_tv_following_count"
-                    android:text="0"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>
-
 
 
     </RelativeLayout>

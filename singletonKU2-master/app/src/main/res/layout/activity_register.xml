@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/beige"
     tools:context=".RegisterActivity">
 
     <EditText
@@ -16,6 +17,7 @@
         android:layout_marginBottom="343dp"
         android:ems="10"
         android:hint="이메일을 입력하세요"
+        android:textColorHint="#99000000"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +32,7 @@
         android:layout_marginTop="100dp"
         android:ems="10"
         android:hint="비밀번호를 입력하세요"
+        android:textColorHint="#99000000"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -44,6 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="#814CAF50"
         tools:text="가입완료" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

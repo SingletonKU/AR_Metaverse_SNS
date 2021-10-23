@@ -1,5 +1,6 @@
 package com.singletonku.ar_metaverse_sns
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -54,8 +55,13 @@ class RegisterActivity : AppCompatActivity() {
                             .setValue(account)
                         Toast.makeText(this@RegisterActivity, "회원가입에 성공하셨습니다", Toast.LENGTH_SHORT)
                             .show()
+
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish() // 현재 엑티비티 파괴
+
                     } else {
-                        Toast.makeText(this@RegisterActivity, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@RegisterActivity, "아이디가 이메일 형식이어야 합니다", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }

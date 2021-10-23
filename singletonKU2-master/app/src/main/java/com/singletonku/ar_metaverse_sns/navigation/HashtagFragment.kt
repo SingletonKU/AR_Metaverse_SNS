@@ -170,6 +170,9 @@ class HashtagFragment : Fragment() {
             if (checkId != contentDTOs[position].uid) {
                 holder.binding.detailviewitemProfileDelete.visibility = View.GONE
             }
+            else{
+                holder.binding.detailviewitemProfileDelete.visibility = View.VISIBLE
+            }
 
             holder.binding.detailviewitemProfileDelete.setOnClickListener {
 
@@ -287,20 +290,34 @@ class HashtagFragment : Fragment() {
                 firestore?.collection("images")?.whereArrayContainsAny("hashtagList", listOf(stringHashtag))
                     ?.orderBy("timestamp")
 
+            var flag = false
+
             firestore?.collection("images")?.orderBy("timestamp")
                 ?.addSnapshotListener { value, error2 ->
                     ref?.addSnapshotListener { querySnapshot, error ->
+                        Log.d("snap size", "null 확인후 리턴 직전")
+
+                        //sometimes, This code return null of qeurySnapshot when it signout
+                        if (querySnapshot == null) {
+                            if(flag != true){
+                                contentDTOs.clear()
+                                contentUidList.clear()
+                                notifyDataSetChanged()
+                            }
+                            return@addSnapshotListener
+                        }
+
+                        flag = true
+
+                        Log.d("returnSnapshot", "안들어옴~"+ flag)
                         var newContentDTOs: ArrayList<ContentDTO> = arrayListOf()
                         var newContentUidList: ArrayList<String> = arrayListOf()
                         newContentDTOs.clear()
                         newContentUidList.clear()
 
-                        Log.d("snap size", "null 확인후 리턴 직전")
 
-                        //sometimes, This code return null of qeurySnapshot when it signout
-                        if (querySnapshot == null) return@addSnapshotListener
 
-                        Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
+                        //Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
                         for (snapshot in querySnapshot!!.documents) {
                             var item = snapshot.toObject(ContentDTO::class.java)
                             newContentDTOs.add(item!!)

@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.singletonku.ar_metaverse_sns.MainActivity
+import com.singletonku.ar_metaverse_sns.OnSingleClickListener
 import com.singletonku.ar_metaverse_sns.R
 import com.singletonku.ar_metaverse_sns.databinding.ActivityAddPhotoBinding
 import com.singletonku.ar_metaverse_sns.navigation.model.ContentDTO
@@ -82,9 +84,14 @@ class AddPhotoActivity : AppCompatActivity() {
 
 
         //add image upload event
-        binding.addphotoBtnUpload.setOnClickListener {
-            contentUpload()
-        }
+        binding.addphotoBtnUpload.setOnClickListener(object : OnSingleClickListener(){
+            override fun onSingleClick(v: View) {
+
+                    contentUpload()
+
+            }
+
+        })
 
         binding.addviewBtnBack.setOnClickListener {
             setResult(Activity.RESULT_OK)

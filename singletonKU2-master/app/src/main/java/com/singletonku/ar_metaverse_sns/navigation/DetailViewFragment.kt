@@ -162,6 +162,10 @@ class DetailViewFragment : Fragment() {
             if (checkId != contentDTOs[position].uid) {
                 holder.binding.detailviewitemProfileDelete.visibility = View.GONE
             }
+            else{
+                Log.d("uid확인", "checkId = " + checkId + ", currentUser : " + FirebaseAuth.getInstance().currentUser)
+                holder.binding.detailviewitemProfileDelete.visibility = View.VISIBLE
+            }
 
             holder.binding.detailviewitemProfileDelete.setOnClickListener {
 
@@ -280,14 +284,27 @@ class DetailViewFragment : Fragment() {
 
 
         fun recyclerDataInit(){
+
+            var flag = false
+
             firestore?.collection("images")?.orderBy("timestamp")
                 ?.addSnapshotListener { querySnapshot, exception ->
                     contentDTOs.clear()
                     contentUidList.clear()
 
                     //sometimes, This code return null of qeurySnapshot when it signout
-                    if (querySnapshot == null) return@addSnapshotListener
+                    if (querySnapshot == null) {
+                        if(flag != true){
+                            contentDTOs.clear()
+                            contentUidList.clear()
+                            notifyDataSetChanged()
+                        }
+                        return@addSnapshotListener
+                    }
 
+                    flag = true
+
+                    Log.d("returnSnapshot", "안들어옴~"+ flag)
                     for (snapshot in querySnapshot!!.documents) {
                         var item = snapshot.toObject(ContentDTO::class.java)
                         contentDTOs.add(item!!)

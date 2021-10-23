@@ -23,7 +23,7 @@
         android:id="@+id/action_ar"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_map_24"
-        android:title="Home" />
+        android:title="AR" />
 
     <item
         android:id="@+id/action_account"

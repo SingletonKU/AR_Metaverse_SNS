@@ -7,10 +7,31 @@
     tools:context=".navigation.ArFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="코엑스에서 AR을 체험하시려면 \n 다음 버튼을 클릭하세요!"
+        android:layout_above="@+id/frag_ar_btn"
+        android:layout_margin="20dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/black"
-        android:text="@string/hello_blank_fragment" />
+        />
+    <Button
+        android:id="@+id/frag_ar_btn"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="AR 모드"
+        android:layout_margin="20dp"/>
+
+    </RelativeLayout>
 
 </FrameLayout>

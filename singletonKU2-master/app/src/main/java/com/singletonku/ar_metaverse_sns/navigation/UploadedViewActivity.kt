@@ -25,6 +25,7 @@ import com.singletonku.ar_metaverse_sns.R
 import com.singletonku.ar_metaverse_sns.databinding.ActivityUploadedViewBinding
 import com.singletonku.ar_metaverse_sns.databinding.ItemDetailBinding
 import com.singletonku.ar_metaverse_sns.navigation.model.ContentDTO
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -47,8 +48,14 @@ class UploadedViewActivity : AppCompatActivity() {
         activityBinding.upviewRecyclerview.layoutManager = LinearLayoutManager(this)
 
         activityBinding.upviewBtnBack.setOnClickListener {
-            setResult(Activity.RESULT_OK)
-            finish()
+            //setResult(Activity.RESULT_OK)
+            //finish()
+
+
+            var myIntent = Intent(this, MainActivity::class.java)
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK) //액티비티 스택제거
+            myIntent.putExtra("userEvent", "yes")
+            startActivity(myIntent)
         }
     }
 
@@ -155,9 +162,13 @@ class UploadedViewActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+
             var checkId = FirebaseAuth.getInstance().currentUser?.uid
             if (checkId != contentDTOs[position].uid) {
                 holder.binding.detailviewitemProfileDelete.visibility = View.GONE
+            }
+            else{
+                holder.binding.detailviewitemProfileDelete.visibility = View.VISIBLE
             }
 
 
@@ -275,21 +286,32 @@ class UploadedViewActivity : AppCompatActivity() {
 
             Log.d("my UID", uid!!)
 
+            var flag = false
 
             firestore?.collection("images")?.orderBy("timestamp")
                 ?.addSnapshotListener { value, error2 ->
                     ref?.addSnapshotListener { querySnapshot, error ->
+
+                        Log.d("snap size", "null 확인후 리턴 직전")
+                        //sometimes, This code return null of qeurySnapshot when it signout
+                        if (querySnapshot == null) {
+                            if(flag != true){
+                                contentDTOs.clear()
+                                contentUidList.clear()
+                                notifyDataSetChanged()
+                            }
+                            return@addSnapshotListener
+                        }
+
+                        flag = true
+
+                        Log.d("returnSnapshot", "안들어옴~"+ flag)
                         var newContentDTOs: ArrayList<ContentDTO> = arrayListOf()
                         var newContentUidList: ArrayList<String> = arrayListOf()
                         newContentDTOs.clear()
                         newContentUidList.clear()
 
-                        Log.d("snap size", "null 확인후 리턴 직전")
-
-                        //sometimes, This code return null of qeurySnapshot when it signout
-                        if (querySnapshot == null) return@addSnapshotListener
-
-                        Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
+                        //Log.d("snap size", "null 아님 확인, size : " + querySnapshot.size())
                         for (snapshot in querySnapshot!!.documents) {
                             var item = snapshot.toObject(ContentDTO::class.java)
                             newContentDTOs.add(item!!)

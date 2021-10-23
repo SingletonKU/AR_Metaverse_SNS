@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish() // 현재 엑티비티 파괴
                     } else {
-                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "아이디 혹은 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -60,12 +60,13 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //moveMainPage(mFirebaseAuth?.currentUser)
+        moveMainPage(mFirebaseAuth?.currentUser)
     }
 
     fun moveMainPage(user : FirebaseUser?){
         if(user != null){
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }

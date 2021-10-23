@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:text="AR 모드"
+        android:backgroundTint="#814CAF50"
         android:layout_margin="20dp"/>
 
     </RelativeLayout>

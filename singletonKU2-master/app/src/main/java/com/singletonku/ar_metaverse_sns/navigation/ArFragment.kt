@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.singletonku.ar_metaverse_sns.R
 import com.singletonku.ar_metaverse_sns.databinding.FragmentArBinding
 
@@ -28,8 +29,14 @@ class ArFragment : Fragment() {
 
         binding.fragArBtn.setOnClickListener {
             Log.d("ar", "실행직전")
-            val arIntent = activity?.packageManager?.getLaunchIntentForPackage("com.maxst.vpssdk")
-            startActivity(arIntent)
+            try {
+                val arIntent =
+                    activity?.packageManager?.getLaunchIntentForPackage("com.maxst.vpssdk")
+                startActivity(arIntent)
+            }
+            catch (err : Exception){
+                Toast.makeText(this@ArFragment.requireContext(), "AR 앱을 설치해주세요", Toast.LENGTH_LONG)
+            }
         }
     }
 

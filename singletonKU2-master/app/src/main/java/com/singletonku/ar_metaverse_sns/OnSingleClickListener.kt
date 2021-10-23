@@ -5,7 +5,7 @@ import android.view.View
 
 public abstract class OnSingleClickListener : View.OnClickListener {
 
-    private final var MIN_CLICK_INTERVAL : Long = 1500
+    private final var MIN_CLICK_INTERVAL : Long = 3000
     private var mLastClickTime : Long = 0
 
     public abstract fun onSingleClick (v : View)
